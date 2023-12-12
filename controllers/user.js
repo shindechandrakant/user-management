@@ -2,6 +2,7 @@ import {
   saveUserInDB,
   getUserByIdUtil,
   deleteUserByIdUtil,
+  updateUserByIdUtil,
 } from "../utils/user.js";
 
 const getUserById = async (req, res) => {
@@ -29,8 +30,8 @@ const getUserById = async (req, res) => {
 /**
  * - Register User (First Name, Last Name, Email, Phone) -> done
 - Get User by ID -> done
-- Update User (First Name, Last Name, Email, Phone)
-- Delete/Disable User
+- Update User (First Name, Last Name, Email, Phone) -> 
+- Delete/Disable User -> Done
 - List All Users with filters (Filters: First Name, Last Name, Email, Phone)
  */
 const createUser = async (req, res) => {
@@ -58,8 +59,28 @@ const createUser = async (req, res) => {
   }
 };
 
-const updateUserById = (req, res) => {
+const updateUserById = async (req, res) => {
   // update User By Id
+  const { userId } = req.params;
+  if (!userId) {
+    return res.status(400).json({
+      message: "userId is missing in path parameter",
+    });
+  }
+
+  try {
+    const updateData = req.body;
+    const updatedData = await updateUserByIdUtil(userId, updateData);
+    return res.status(200).json({
+      message: "User updated successfully!",
+      user: updatedData,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      message: "Something went wrong while updating user",
+      error: err.message,
+    });
+  }
 };
 
 const deleteUserById = async (req, res) => {

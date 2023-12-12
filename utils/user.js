@@ -99,10 +99,29 @@ const deleteUserByIdUtil = async (userId) => {
   }
 };
 
+const updateUserByIdUtil = async (userId, updatedData) => {
+  try {
+    const result = await userModel.findByIdAndUpdate(
+      { _id: userId },
+      { $set: updatedData },
+      {
+        new: true,
+      }
+    );
+    return result;
+  } catch (err) {
+    console.log(
+      `Something went wrong while updating User. Error: ${err.message}`
+    );
+    throw err;
+  }
+};
+
 export {
   validateUserFields,
   saveUserInDB,
   getUserByIdUtil,
   doesUserExist,
   deleteUserByIdUtil,
+  updateUserByIdUtil,
 };
