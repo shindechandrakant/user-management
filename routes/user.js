@@ -5,7 +5,7 @@ import {
   getListOfUser,
   getUserById,
   updateUserById,
-} from "../controllers/user";
+} from "../controllers/user.js";
 const userRoute = Router();
 
 userRoute.post("/user", createUser);
