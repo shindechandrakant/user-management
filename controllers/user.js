@@ -1,4 +1,8 @@
-import { saveUserInDB, getUserByIdUtil } from "../utils/user.js";
+import {
+  saveUserInDB,
+  getUserByIdUtil,
+  deleteUserByIdUtil,
+} from "../utils/user.js";
 
 const getUserById = async (req, res) => {
   const { userId } = req.params;
@@ -10,14 +14,10 @@ const getUserById = async (req, res) => {
 
   try {
     const user = await getUserByIdUtil(userId);
-    return user
-      ? res.status(200).json({
-          message: "User found successfully.",
-          user,
-        })
-      : res.status(404).json({
-          message: "User dosen't exist.",
-        });
+    return res.status(200).json({
+      message: "User found successfully.",
+      user,
+    });
   } catch (err) {
     return res.status(500).json({
       message: `Something went wrong while getting user by id: ${userId}`,
@@ -27,15 +27,13 @@ const getUserById = async (req, res) => {
 };
 
 /**
- * - Register User (First Name, Last Name, Email, Phone)
-- Get User by ID
+ * - Register User (First Name, Last Name, Email, Phone) -> done
+- Get User by ID -> done
 - Update User (First Name, Last Name, Email, Phone)
 - Delete/Disable User
 - List All Users with filters (Filters: First Name, Last Name, Email, Phone)
  */
 const createUser = async (req, res) => {
-  // create user
-
   const { firstName, lastName, email, phone } = req.body;
 
   const newUser = {
@@ -54,7 +52,7 @@ const createUser = async (req, res) => {
     });
   } catch (err) {
     return res.status(500).json({
-      message: "Something went wrong while Saving user",
+      message: "Something went wrong while creating user",
       error: err.message,
     });
   }
@@ -64,8 +62,23 @@ const updateUserById = (req, res) => {
   // update User By Id
 };
 
-const deleteUserById = (req, res) => {
-  // delete User By Id
+const deleteUserById = async (req, res) => {
+  const { userId } = req.params;
+  if (!userId) {
+    return res.status(400).json({
+      message: "userId is missing in path parameter",
+    });
+  }
+
+  try {
+    await deleteUserByIdUtil(userId);
+    return res.status(204).json({});
+  } catch (err) {
+    return res.status(500).json({
+      message: `Something went wrong while getting user by id: ${userId}`,
+      error: err.message,
+    });
+  }
 };
 
 const getListOfUser = (req, res) => {

@@ -61,4 +61,48 @@ const saveUserInDB = async (newUser) => {
   }
 };
 
-export { validateUserFields, saveUserInDB, getUserByIdUtil };
+const doesUserExist = async (req, res, next) => {
+  const { userId } = req.params;
+  if (!userId) {
+    return res.status(400).json({
+      message: "userId is missing in path parameter",
+    });
+  }
+  try {
+    const doesExist = await userModel.exists({ _id: userId });
+    if (doesExist) next();
+    else {
+      return res.status(404).json({
+        message: "User dosen't exist.",
+      });
+    }
+  } catch (err) {
+    console.log(
+      `Something went wrong while checking userExist. Error: ${err.message}`
+    );
+    return res.status(500).json({
+      message: "Something went wrong while checking userExist",
+      error: err.message,
+    });
+  }
+};
+
+const deleteUserByIdUtil = async (userId) => {
+  try {
+    const deleteReturn = await userModel.deleteOne({ _id: userId });
+    console.log(`Deleted user: ${userId}. Result: ${deleteReturn}`);
+  } catch (err) {
+    console.log(
+      `Something went wrong while deleting User. Error: ${err.message}`
+    );
+    throw err;
+  }
+};
+
+export {
+  validateUserFields,
+  saveUserInDB,
+  getUserByIdUtil,
+  doesUserExist,
+  deleteUserByIdUtil,
+};
