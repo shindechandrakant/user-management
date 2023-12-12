@@ -38,6 +38,18 @@ const validateUserFields = (req, res, next) => {
   next();
 };
 
+const getUserByIdUtil = async (userId) => {
+  try {
+    const user = await userModel.findById(userId);
+    return user;
+  } catch (err) {
+    console.log(
+      `Something went wrong while getting user. Error: ${err.message}`
+    );
+    throw err;
+  }
+};
+
 const saveUserInDB = async (newUser) => {
   try {
     const user = new userModel(newUser);
@@ -49,4 +61,4 @@ const saveUserInDB = async (newUser) => {
   }
 };
 
-export { validateUserFields, saveUserInDB };
+export { validateUserFields, saveUserInDB, getUserByIdUtil };

@@ -1,6 +1,6 @@
-import { saveUserInDB } from "../utils/user.js";
+import { saveUserInDB, getUserByIdUtil } from "../utils/user.js";
 
-const getUserById = (req, res) => {
+const getUserById = async (req, res) => {
   const { userId } = req.params;
   if (!userId) {
     return res.status(400).json({
@@ -9,11 +9,21 @@ const getUserById = (req, res) => {
   }
 
   try {
-    return res.status(200).json({
-      name: "Get User By ID",
-      userId,
+    const user = await getUserByIdUtil(userId);
+    return user
+      ? res.status(200).json({
+          message: "User found successfully.",
+          user,
+        })
+      : res.status(404).json({
+          message: "User dosen't exist.",
+        });
+  } catch (err) {
+    return res.status(500).json({
+      message: `Something went wrong while getting user by id: ${userId}`,
+      error: err.message,
     });
-  } catch (err) {}
+  }
 };
 
 /**
@@ -60,6 +70,9 @@ const deleteUserById = (req, res) => {
 
 const getListOfUser = (req, res) => {
   // list of Users
+  return res.status(200).json({
+    message: "get list of users",
+  });
 };
 
 export {
