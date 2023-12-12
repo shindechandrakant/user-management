@@ -1,4 +1,4 @@
-import { client } from "../db/dbConnection";
+import { client } from "../db/dbConnection.js";
 import { Schema } from "mongoose";
 
 const userSchema = new Schema({
