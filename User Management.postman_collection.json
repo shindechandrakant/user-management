@@ -1,0 +1,165 @@
+{
+	"info": {
+		"_postman_id": "897d9573-43d6-4053-b8dd-e53c4b71b31b",
+		"name": "User Management",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24659396",
+		"_collection_link": "https://ekatvam-innovations.postman.co/workspace/My-Workspace~6ac971b5-49f9-4e98-88fd-ab730bb42d68/collection/24659396-897d9573-43d6-4053-b8dd-e53c4b71b31b?action=share&source=collection_link&creator=24659396"
+	},
+	"item": [
+		{
+			"name": "get user by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/user/65789573b230752befb657d3",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"user",
+						"65789573b230752befb657d3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"Yash\",\r\n    \"lastName\": \"Shinde\",\r\n    \"email\": \"cs1@cs.dev\",\r\n    \"phone\": \"8788980546\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/user",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit user by Id",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"Chandrakant\",\r\n    \"lastName\": \"Shinde\",\r\n    \"email\": \"chandu@cs.dev\",\r\n    \"phone\": \"8788980546\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/user/65789573b230752befb657d3",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"user",
+						"65789573b230752befb657d3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete user By Id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/user/65786987c48fbfa0000ebbb6",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"user",
+						"65786987c48fbfa0000ebbb6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get list of users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/user?firstName=Chandrakant",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"user"
+					],
+					"query": [
+						{
+							"key": "firstName",
+							"value": "Chandrakant"
+						},
+						{
+							"key": "lastName",
+							"value": "Shinde",
+							"disabled": true
+						},
+						{
+							"key": "phone",
+							"value": "8788980546",
+							"disabled": true
+						},
+						{
+							"key": "email",
+							"value": "chandrakant@gmail.com",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BASE_URL",
+			"value": "http://localhost:8000/api/v1",
+			"type": "string"
+		}
+	]
+}
