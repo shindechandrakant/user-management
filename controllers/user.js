@@ -3,6 +3,7 @@ import {
   getUserByIdUtil,
   deleteUserByIdUtil,
   updateUserByIdUtil,
+  getListOfUserUtil,
 } from "../utils/user.js";
 
 const getUserById = async (req, res) => {
@@ -32,8 +33,7 @@ const getUserById = async (req, res) => {
 - Get User by ID -> done
 - Update User (First Name, Last Name, Email, Phone) -> 
 - Delete/Disable User -> Done
-- List All Users with filters (Filters: First Name, Last Name, Email, Phone)
- */
+*/
 const createUser = async (req, res) => {
   const { firstName, lastName, email, phone } = req.body;
 
@@ -102,8 +102,17 @@ const deleteUserById = async (req, res) => {
   }
 };
 
-const getListOfUser = (req, res) => {
+// - List All Users with filters (Filters: First Name, Last Name, Email, Phone)
+const getListOfUser = async (req, res) => {
   // list of Users
+  const searchValues = req.query;
+  try {
+    const result = await getListOfUserUtil(searchValues);
+    return res.status(200).json({
+      message: "get list of users",
+      users: result,
+    });
+  } catch (err) {}
   return res.status(200).json({
     message: "get list of users",
   });

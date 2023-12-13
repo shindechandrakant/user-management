@@ -117,6 +117,20 @@ const updateUserByIdUtil = async (userId, updatedData) => {
   }
 };
 
+const getListOfUserUtil = async (searchParameters) => {
+  let conditions = [];
+  for (let key of Object.keys(searchParameters)) {
+    console.log(key);
+    conditions.push({
+      [key]: searchParameters[key],
+    });
+  }
+  const result = await userModel.find({
+    $or: conditions,
+  });
+  return result;
+};
+
 export {
   validateUserFields,
   saveUserInDB,
@@ -124,4 +138,5 @@ export {
   doesUserExist,
   deleteUserByIdUtil,
   updateUserByIdUtil,
+  getListOfUserUtil,
 };
